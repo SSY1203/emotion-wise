@@ -1,103 +1,120 @@
-import Image from "next/image";
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Brain, Heart, BarChart3, Users, CheckCircle, Target } from "lucide-react"
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="py-20 px-4 text-center">
+        <div className="container mx-auto max-w-4xl">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+            EmotionWise
+          </h1>
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8">
+            당신의 감정을 이해하고, 건강하게 관리하는 AI 기반 감정 코칭 플랫폼
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/emotions">
+              <Button size="lg" className="w-full sm:w-auto">
+                <Heart className="mr-2 h-5 w-5" />
+                감정 기록하기
+              </Button>
+            </Link>
+            <Link href="/dashboard">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                <BarChart3 className="mr-2 h-5 w-5" />
+                대시보드 보기
+              </Button>
+            </Link>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 px-4 bg-muted/50">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-3xl font-bold text-center mb-12">주요 기능</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card>
+              <CardHeader>
+                <Heart className="h-12 w-12 text-primary mb-4" />
+                <CardTitle>감정 상황 입력</CardTitle>
+                <CardDescription>
+                  시간, 장소, 상황을 체계적으로 기록하고 감정 상태를 측정합니다.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            
+            <Card>
+              <CardHeader>
+                <Brain className="h-12 w-12 text-primary mb-4" />
+                <CardTitle>AI 감정 분석</CardTitle>
+                <CardDescription>
+                  3초 이내 실시간 분석으로 감정 원인을 파악하고 개인화된 인사이트를 제공합니다.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            
+            <Card>
+              <CardHeader>
+                <BarChart3 className="h-12 w-12 text-primary mb-4" />
+                <CardTitle>감정 히스토리</CardTitle>
+                <CardDescription>
+                  일/주/월별 감정 변화를 시각화하고 패턴을 분석하여 개선 효과를 추적합니다.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-3xl font-bold text-center mb-12">왜 EmotionWise인가요?</h2>
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="space-y-6">
+                <div className="flex items-start space-x-4">
+                  <CheckCircle className="h-6 w-6 text-primary mt-1" />
+                  <div>
+                    <h3 className="font-semibold mb-2">과학적 접근</h3>
+                    <p className="text-muted-foreground">AI와 심리학 이론을 결합한 체계적인 감정 분석</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <Target className="h-6 w-6 text-primary mt-1" />
+                  <div>
+                    <h3 className="font-semibold mb-2">맞춤형 솔루션</h3>
+                    <p className="text-muted-foreground">개인의 감정 패턴을 학습하여 최적화된 조언 제공</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <Users className="h-6 w-6 text-primary mt-1" />
+                  <div>
+                    <h3 className="font-semibold mb-2">지속적인 관리</h3>
+                    <p className="text-muted-foreground">단순한 기록이 아닌 실질적인 감정 관리 도구</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-gradient-to-br from-primary/10 to-purple-600/10 rounded-lg p-8">
+              <h3 className="text-2xl font-bold mb-4">지금 시작해보세요</h3>
+              <p className="text-muted-foreground mb-6">
+                복잡한 감정을 명확히 파악하고, AI가 제안하는 맞춤형 관리 방법으로 
+                더 건강한 감정 생활을 시작하세요.
+              </p>
+              <Link href="/emotions">
+                <Button>
+                  무료로 시작하기
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-  );
+  )
 }
