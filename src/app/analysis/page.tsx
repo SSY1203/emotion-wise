@@ -7,13 +7,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { EmotionAnalysis, EmotionRecord } from "@/types/emotion";
 import { ArrowLeft, BookmarkPlus, Brain, RefreshCw, Share } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function AnalysisPage() {
-  const searchParams = useSearchParams();
+  const [recordId, setRecordId] = useState<string | null>(null);
   const router = useRouter();
-  const recordId = searchParams.get("id");
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    setRecordId(searchParams.get("id"));
+  }, []);
 
   const [emotionRecord, setEmotionRecord] = useState<
     (EmotionRecord & { id: string }) | null

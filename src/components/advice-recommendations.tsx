@@ -1,51 +1,52 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { 
-  AdviceRecommendation, 
-  adviceTypeLabels, 
-  adviceCategoryLabels,
-  AdviceCategory 
-} from "@/types/emotion"
-import { 
-  Clock, 
-  CheckCircle, 
-  Play, 
-  Lightbulb, 
-  Heart, 
-  Users, 
-  Wind, 
-  Zap,
-  Brain,
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  AdviceCategory,
+  AdviceRecommendation,
+  adviceTypeLabels,
+} from "@/types/emotion";
+import {
   Activity,
+  Brain,
+  CheckCircle,
+  Clock,
+  HeadphonesIcon,
+  Heart,
+  Lightbulb,
+  Play,
   Shield,
-  HeadphonesIcon
-} from "lucide-react"
+  Users,
+  Wind,
+  Zap,
+} from "lucide-react";
+import { useState } from "react";
 
 interface AdviceRecommendationsProps {
-  recommendations: AdviceRecommendation[]
-  onAdviceComplete?: (adviceId: string) => void
+  recommendations: AdviceRecommendation[];
+  onAdviceComplete?: (adviceId: string) => void;
 }
 
-export function AdviceRecommendations({ 
-  recommendations, 
-  onAdviceComplete 
+export function AdviceRecommendations({
+  recommendations,
+  onAdviceComplete,
 }: AdviceRecommendationsProps) {
-  const [completedAdvices, setCompletedAdvices] = useState<Set<string>>(new Set())
-  const [activeAdvice, setActiveAdvice] = useState<string | null>(null)
+  const [completedAdvices, setCompletedAdvices] = useState<Set<string>>(
+    new Set()
+  );
+  const [activeAdvice, setActiveAdvice] = useState<string | null>(null);
 
   const handleAdviceComplete = (adviceId: string) => {
-    setCompletedAdvices(prev => new Set([...prev, adviceId]))
-    onAdviceComplete?.(adviceId)
-  }
+    setCompletedAdvices((prev) => new Set([...prev, adviceId]));
+    onAdviceComplete?.(adviceId);
+  };
 
   const handleAdviceStart = (adviceId: string) => {
-    setActiveAdvice(activeAdvice === adviceId ? null : adviceId)
-  }
+    setActiveAdvice(activeAdvice === adviceId ? null : adviceId);
+  };
 
   const getAdviceIcon = (type: string) => {
     const iconMap: Record<string, React.ElementType> = {
@@ -56,27 +57,27 @@ export function AdviceRecommendations({
       cognitive_reframe: Lightbulb,
       social_connection: Users,
       self_care: Heart,
-      professional_help: HeadphonesIcon
-    }
-    return iconMap[type] || Lightbulb
-  }
+      professional_help: HeadphonesIcon,
+    };
+    return iconMap[type] || Lightbulb;
+  };
 
   const getPriorityColor = (priority: string) => {
     const colorMap = {
-      high: 'bg-red-100 text-red-800 border-red-200',
-      medium: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-      low: 'bg-green-100 text-green-800 border-green-200'
-    }
-    return colorMap[priority as keyof typeof colorMap] || colorMap.medium
-  }
+      high: "bg-red-100 text-red-800 border-red-200",
+      medium: "bg-yellow-100 text-yellow-800 border-yellow-200",
+      low: "bg-green-100 text-green-800 border-green-200",
+    };
+    return colorMap[priority as keyof typeof colorMap] || colorMap.medium;
+  };
 
   const groupedRecommendations = recommendations.reduce((acc, rec) => {
     if (!acc[rec.category]) {
-      acc[rec.category] = []
+      acc[rec.category] = [];
     }
-    acc[rec.category].push(rec)
-    return acc
-  }, {} as Record<AdviceCategory, AdviceRecommendation[]>)
+    acc[rec.category].push(rec);
+    return acc;
+  }, {} as Record<AdviceCategory, AdviceRecommendation[]>);
 
   if (recommendations.length === 0) {
     return (
@@ -89,7 +90,7 @@ export function AdviceRecommendations({
           </p>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   return (
@@ -113,16 +114,19 @@ export function AdviceRecommendations({
               {advices.length > 0 ? (
                 <div className="space-y-4">
                   {advices.map((advice) => {
-                    const Icon = getAdviceIcon(advice.type)
-                    const isCompleted = completedAdvices.has(advice.id)
-                    const isActive = activeAdvice === advice.id
+                    const Icon = getAdviceIcon(advice.type);
+                    const isCompleted = completedAdvices.has(advice.id);
+                    const isActive = activeAdvice === advice.id;
 
                     return (
-                      <Card 
-                        key={advice.id} 
+                      <Card
+                        key={advice.id}
                         className={`transition-all ${
-                          isCompleted ? 'bg-green-50 border-green-200' : 
-                          isActive ? 'ring-2 ring-primary' : ''
+                          isCompleted
+                            ? "bg-green-50 border-green-200"
+                            : isActive
+                            ? "ring-2 ring-primary"
+                            : ""
                         }`}
                       >
                         <CardHeader className="pb-3">
@@ -130,7 +134,9 @@ export function AdviceRecommendations({
                             <div className="flex items-start gap-3">
                               <Icon className="h-5 w-5 text-primary mt-1" />
                               <div className="space-y-1">
-                                <h4 className="font-semibold text-lg">{advice.title}</h4>
+                                <h4 className="font-semibold text-lg">
+                                  {advice.title}
+                                </h4>
                                 <p className="text-sm text-muted-foreground">
                                   {advice.description}
                                 </p>
@@ -138,12 +144,17 @@ export function AdviceRecommendations({
                                   <Badge variant="outline">
                                     {adviceTypeLabels[advice.type]}
                                   </Badge>
-                                  <Badge 
-                                    className={getPriorityColor(advice.priority)}
+                                  <Badge
+                                    className={getPriorityColor(
+                                      advice.priority
+                                    )}
                                     variant="outline"
                                   >
-                                    {advice.priority === 'high' ? '높음' : 
-                                     advice.priority === 'medium' ? '보통' : '낮음'}
+                                    {advice.priority === "high"
+                                      ? "높음"
+                                      : advice.priority === "medium"
+                                      ? "보통"
+                                      : "낮음"}
                                   </Badge>
                                   <div className="flex items-center gap-1 text-xs text-muted-foreground">
                                     <Clock className="h-3 w-3" />
@@ -160,7 +171,7 @@ export function AdviceRecommendations({
                                   onClick={() => handleAdviceStart(advice.id)}
                                 >
                                   <Play className="h-4 w-4 mr-1" />
-                                  {isActive ? '진행 중' : '시작'}
+                                  {isActive ? "진행 중" : "시작"}
                                 </Button>
                               )}
                               {isCompleted && (
@@ -176,11 +187,19 @@ export function AdviceRecommendations({
                         {isActive && !isCompleted && (
                           <CardContent className="pt-0">
                             <div className="bg-muted/50 rounded-lg p-4 space-y-3">
-                              <h5 className="font-medium text-sm mb-3">단계별 가이드:</h5>
+                              <h5 className="font-medium text-sm mb-3">
+                                단계별 가이드:
+                              </h5>
                               <div className="space-y-2">
                                 {advice.steps.map((step, index) => (
-                                  <div key={index} className="flex items-start gap-2">
-                                    <Badge variant="outline" className="min-w-[24px] h-6 text-xs">
+                                  <div
+                                    key={index}
+                                    className="flex items-start gap-2"
+                                  >
+                                    <Badge
+                                      variant="outline"
+                                      className="min-w-[24px] h-6 text-xs"
+                                    >
                                       {index + 1}
                                     </Badge>
                                     <p className="text-sm">{step}</p>
@@ -189,7 +208,9 @@ export function AdviceRecommendations({
                               </div>
                               <div className="flex justify-end pt-3 border-t">
                                 <Button
-                                  onClick={() => handleAdviceComplete(advice.id)}
+                                  onClick={() =>
+                                    handleAdviceComplete(advice.id)
+                                  }
                                   size="sm"
                                 >
                                   <CheckCircle className="h-4 w-4 mr-1" />
@@ -200,7 +221,7 @@ export function AdviceRecommendations({
                           </CardContent>
                         )}
                       </Card>
-                    )
+                    );
                   })}
                 </div>
               ) : (
@@ -220,13 +241,17 @@ export function AdviceRecommendations({
           <div className="mt-6 pt-6 border-t">
             <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
               <span>완료 진행률</span>
-              <span>{completedAdvices.size} / {recommendations.length}</span>
+              <span>
+                {completedAdvices.size} / {recommendations.length}
+              </span>
             </div>
             <div className="w-full bg-muted rounded-full h-2">
               <div
                 className="bg-primary h-2 rounded-full transition-all"
                 style={{
-                  width: `${(completedAdvices.size / recommendations.length) * 100}%`
+                  width: `${
+                    (completedAdvices.size / recommendations.length) * 100
+                  }%`,
                 }}
               />
             </div>
@@ -234,5 +259,5 @@ export function AdviceRecommendations({
         )}
       </CardContent>
     </Card>
-  )
+  );
 }

@@ -1,42 +1,50 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { EmotionType, EmotionState, emotionLabels, emotionColors } from "@/types/emotion"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  EmotionState,
+  EmotionType,
+  emotionColors,
+  emotionLabels,
+} from "@/types/emotion";
+import { useState } from "react";
 
 interface EmotionSelectorProps {
-  selectedEmotions: EmotionState[]
-  onEmotionChange: (emotions: EmotionState[]) => void
+  selectedEmotions: EmotionState[];
+  onEmotionChange: (emotions: EmotionState[]) => void;
 }
 
-export function EmotionSelector({ selectedEmotions, onEmotionChange }: EmotionSelectorProps) {
-  const [activeEmotion, setActiveEmotion] = useState<EmotionType | null>(null)
+export function EmotionSelector({
+  selectedEmotions,
+  onEmotionChange,
+}: EmotionSelectorProps) {
+  const [, setActiveEmotion] = useState<EmotionType | null>(null);
 
   const handleEmotionSelect = (emotion: EmotionType) => {
-    setActiveEmotion(emotion)
-    
+    setActiveEmotion(emotion);
+
     // 이미 선택된 감정인지 확인
-    const existingIndex = selectedEmotions.findIndex(e => e.type === emotion)
-    
+    const existingIndex = selectedEmotions.findIndex((e) => e.type === emotion);
+
     if (existingIndex === -1) {
       // 새로운 감정 추가
-      onEmotionChange([...selectedEmotions, { type: emotion, intensity: 5 }])
+      onEmotionChange([...selectedEmotions, { type: emotion, intensity: 5 }]);
     }
-  }
+  };
 
   const handleIntensityChange = (emotion: EmotionType, intensity: number) => {
-    const updatedEmotions = selectedEmotions.map(e => 
+    const updatedEmotions = selectedEmotions.map((e) =>
       e.type === emotion ? { ...e, intensity } : e
-    )
-    onEmotionChange(updatedEmotions)
-  }
+    );
+    onEmotionChange(updatedEmotions);
+  };
 
   const handleEmotionRemove = (emotion: EmotionType) => {
-    const filteredEmotions = selectedEmotions.filter(e => e.type !== emotion)
-    onEmotionChange(filteredEmotions)
-    setActiveEmotion(null)
-  }
+    const filteredEmotions = selectedEmotions.filter((e) => e.type !== emotion);
+    onEmotionChange(filteredEmotions);
+    setActiveEmotion(null);
+  };
 
   return (
     <Card>
@@ -49,33 +57,37 @@ export function EmotionSelector({ selectedEmotions, onEmotionChange }: EmotionSe
         {/* 감정 선택 그리드 */}
         <div className="grid grid-cols-4 gap-3">
           {(Object.keys(emotionLabels) as EmotionType[]).map((emotion) => {
-            const isSelected = selectedEmotions.some(e => e.type === emotion)
-            const selectedEmotion = selectedEmotions.find(e => e.type === emotion)
-            
+            const isSelected = selectedEmotions.some((e) => e.type === emotion);
+            const selectedEmotion = selectedEmotions.find(
+              (e) => e.type === emotion
+            );
+
             return (
               <button
                 key={emotion}
                 onClick={() => handleEmotionSelect(emotion)}
                 className={`p-4 rounded-lg border-2 transition-all hover:scale-105 ${
-                  isSelected 
-                    ? 'border-primary bg-primary/10' 
-                    : 'border-border hover:border-primary/50'
+                  isSelected
+                    ? "border-primary bg-primary/10"
+                    : "border-border hover:border-primary/50"
                 }`}
                 style={{
-                  backgroundColor: isSelected 
-                    ? `${emotionColors[emotion]}20` 
-                    : undefined
+                  backgroundColor: isSelected
+                    ? `${emotionColors[emotion]}20`
+                    : undefined,
                 }}
               >
                 <div className="text-2xl mb-2">{getEmotionEmoji(emotion)}</div>
-                <div className="text-sm font-medium">{emotionLabels[emotion]}</div>
+                <div className="text-sm font-medium">
+                  {emotionLabels[emotion]}
+                </div>
                 {selectedEmotion && (
                   <div className="text-xs text-muted-foreground mt-1">
                     강도: {selectedEmotion.intensity}
                   </div>
                 )}
               </button>
-            )
+            );
           })}
         </div>
 
@@ -87,7 +99,8 @@ export function EmotionSelector({ selectedEmotions, onEmotionChange }: EmotionSe
               <div key={emotionState.type} className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium">
-                    {getEmotionEmoji(emotionState.type)} {emotionLabels[emotionState.type]}
+                    {getEmotionEmoji(emotionState.type)}{" "}
+                    {emotionLabels[emotionState.type]}
                   </span>
                   <Button
                     variant="ghost"
@@ -105,13 +118,15 @@ export function EmotionSelector({ selectedEmotions, onEmotionChange }: EmotionSe
                     min="1"
                     max="10"
                     value={emotionState.intensity}
-                    onChange={(e) => handleIntensityChange(
-                      emotionState.type, 
-                      parseInt(e.target.value)
-                    )}
+                    onChange={(e) =>
+                      handleIntensityChange(
+                        emotionState.type,
+                        parseInt(e.target.value)
+                      )
+                    }
                     className="flex-1"
                     style={{
-                      accentColor: emotionColors[emotionState.type]
+                      accentColor: emotionColors[emotionState.type],
                     }}
                   />
                   <span className="text-xs text-muted-foreground">강함</span>
@@ -132,19 +147,19 @@ export function EmotionSelector({ selectedEmotions, onEmotionChange }: EmotionSe
         )}
       </CardContent>
     </Card>
-  )
+  );
 }
 
 function getEmotionEmoji(emotion: EmotionType): string {
   const emojiMap: Record<EmotionType, string> = {
-    joy: '😊',
-    sadness: '😢',
-    anger: '😠',
-    fear: '😨',
-    surprise: '😲',
-    disgust: '🤢',
-    trust: '🤗',
-    anticipation: '🤩'
-  }
-  return emojiMap[emotion]
+    joy: "😊",
+    sadness: "😢",
+    anger: "😠",
+    fear: "😨",
+    surprise: "😲",
+    disgust: "🤢",
+    trust: "🤗",
+    anticipation: "🤩",
+  };
+  return emojiMap[emotion];
 }
