@@ -2,13 +2,13 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Brain, BarChart3, Heart, Home } from "lucide-react"
+import { Brain, BarChart3, Heart, Home, List } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navigation = [
   { name: '홈', href: '/', icon: Home },
   { name: '감정 기록', href: '/emotions', icon: Heart },
-  { name: '분석 결과', href: '/analysis', icon: Brain },
+  { name: '기록 목록', href: '/history', icon: List },
   { name: '대시보드', href: '/dashboard', icon: BarChart3 },
 ]
 

@@ -28,8 +28,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <div className="stars stars-animation"></div>
+        <img src="/moon.png" alt="Moon" className="fixed bottom-[-500px] right-[-500px] w-[1000px] h-[1000px] opacity-50 z-[-1] pointer-events-none" />
         <Navigation />
-        <main>{children}</main>
+        <main className="fade-in relative z-10">{children}</main>
       </body>
     </html>
   );
