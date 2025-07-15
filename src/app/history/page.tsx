@@ -17,7 +17,7 @@ export default function HistoryPage() {
     const loadEmotionRecords = () => {
       try {
         const storedRecords = JSON.parse(localStorage.getItem('emotionRecords') || '[]')
-        storedRecords.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        storedRecords.sort((a: EmotionRecord & { id: string }, b: EmotionRecord & { id: string }) => new Date(b.created_at || '').getTime() - new Date(a.created_at || '').getTime());
         setEmotionRecords(storedRecords)
       } catch (error) {
         console.error('Error loading emotion records:', error)

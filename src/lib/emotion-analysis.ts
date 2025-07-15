@@ -88,7 +88,7 @@ export async function analyzeEmotion(emotionRecord: EmotionRecord): Promise<Emot
     // EmotionAnalysis 객체 생성
     const analysis: EmotionAnalysis = {
       id: `analysis_${Date.now()}`,
-      emotion_record_id: emotionRecord.id,
+      emotion_record_id: emotionRecord.id!,
       primary_emotion: analysisData.primary_emotion as EmotionType,
       triggers: analysisData.triggers || [],
       confidence_score: Math.min(Math.max(analysisData.confidence_score || 0.5, 0), 1),
@@ -135,7 +135,7 @@ function createFallbackAnalysis(emotionRecord: EmotionRecord): EmotionAnalysis {
 
   return {
     id: `analysis_${Date.now()}`,
-    emotion_record_id: emotionRecord.id,
+    emotion_record_id: emotionRecord.id!,
     primary_emotion: primaryEmotion,
     triggers: ['감정 분석 중 오류가 발생했습니다'],
     confidence_score: 0.5,

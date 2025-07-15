@@ -48,7 +48,7 @@ export function AdviceRecommendations({
   }
 
   const getAdviceIcon = (type: string) => {
-    const iconMap: Record<string, any> = {
+    const iconMap: Record<string, React.ElementType> = {
       immediate_action: Zap,
       breathing_exercise: Wind,
       mindfulness: Brain,

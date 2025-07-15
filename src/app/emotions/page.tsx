@@ -1,91 +1,110 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { EmotionSelector } from "@/components/emotion-selector"
-import { EmotionRecord, SituationInfo, EmotionState, situationTypes } from "@/types/emotion"
-import { Calendar, Clock, MapPin, Users, MessageSquare, Brain } from "lucide-react"
+import { EmotionSelector } from "@/components/emotion-selector";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  EmotionRecord,
+  EmotionState,
+  SituationInfo,
+  situationTypes,
+} from "@/types/emotion";
+import { Brain, Clock, MapPin, MessageSquare, Users } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function EmotionsPage() {
-  const router = useRouter()
+  const router = useRouter();
   const [situation, setSituation] = useState<SituationInfo>({
     datetime: new Date().toISOString().slice(0, 16),
-    location: '',
+    location: "",
     people: [],
-    situation_type: ''
-  })
-  
-  const [conversationContent, setConversationContent] = useState('')
-  const [emotions, setEmotions] = useState<EmotionState[]>([])
-  const [peopleInput, setPeopleInput] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
+    situation_type: "",
+  });
+
+  const [conversationContent, setConversationContent] = useState("");
+  const [emotions, setEmotions] = useState<EmotionState[]>([]);
+  const [peopleInput, setPeopleInput] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handlePeopleAdd = () => {
     if (peopleInput.trim() && !situation.people.includes(peopleInput.trim())) {
-      setSituation(prev => ({
+      setSituation((prev) => ({
         ...prev,
-        people: [...prev.people, peopleInput.trim()]
-      }))
-      setPeopleInput('')
+        people: [...prev.people, peopleInput.trim()],
+      }));
+      setPeopleInput("");
     }
-  }
+  };
 
   const handlePeopleRemove = (person: string) => {
-    setSituation(prev => ({
+    setSituation((prev) => ({
       ...prev,
-      people: prev.people.filter(p => p !== person)
-    }))
-  }
+      people: prev.people.filter((p) => p !== person),
+    }));
+  };
 
   const handleSubmit = async () => {
-    if (!situation.location || !situation.situation_type || emotions.length === 0 || !conversationContent) {
-      alert('모든 필수 항목을 입력해주세요.')
-      return
+    if (
+      !situation.location ||
+      !situation.situation_type ||
+      emotions.length === 0 ||
+      !conversationContent
+    ) {
+      alert("모든 필수 항목을 입력해주세요.");
+      return;
     }
 
-    setIsSubmitting(true)
-    
+    setIsSubmitting(true);
+
     const emotionRecord: EmotionRecord = {
       situation,
       conversation_content: conversationContent,
       emotions,
-      created_at: new Date().toISOString()
-    }
+      created_at: new Date().toISOString(),
+    };
 
     try {
       // TODO: API 호출로 데이터 저장
-      console.log('Emotion Record:', emotionRecord)
-      
+      console.log("Emotion Record:", emotionRecord);
+
       // 임시: 로컬 스토리지에 저장
-      const recordId = Date.now().toString()
-      const recordWithId = { ...emotionRecord, id: recordId }
-      
-      const existingRecords = JSON.parse(localStorage.getItem('emotionRecords') || '[]')
-      existingRecords.push(recordWithId)
-      localStorage.setItem('emotionRecords', JSON.stringify(existingRecords))
-      
+      const recordId = Date.now().toString();
+      const recordWithId = { ...emotionRecord, id: recordId };
+
+      const existingRecords = JSON.parse(
+        localStorage.getItem("emotionRecords") || "[]"
+      );
+      existingRecords.push(recordWithId);
+      localStorage.setItem("emotionRecords", JSON.stringify(existingRecords));
+
       // 분석 페이지로 리다이렉트
-      router.push(`/analysis?id=${recordId}`)
+      router.push(`/analysis?id=${recordId}`);
     } catch (error) {
-      console.error('Error saving emotion record:', error)
-      alert('기록 저장 중 오류가 발생했습니다.')
+      console.error("Error saving emotion record:", error);
+      alert("기록 저장 중 오류가 발생했습니다.");
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className="container mx-auto py-8 max-w-4xl">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">감정 기록하기</h1>
         <p className="text-muted-foreground">
-          현재 상황과 감정을 자세히 기록해주세요. AI가 분석하여 맞춤형 조언을 제공합니다.
+          현재 상황과 감정을 자세히 기록해주세요. AI가 분석하여 맞춤형 조언을
+          제공합니다.
         </p>
       </div>
 
@@ -108,10 +127,15 @@ export default function EmotionsPage() {
                   id="datetime"
                   type="datetime-local"
                   value={situation.datetime}
-                  onChange={(e) => setSituation(prev => ({ ...prev, datetime: e.target.value }))}
+                  onChange={(e) =>
+                    setSituation((prev) => ({
+                      ...prev,
+                      datetime: e.target.value,
+                    }))
+                  }
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="location" className="flex items-center gap-2">
                   <MapPin className="h-4 w-4" />
@@ -121,7 +145,12 @@ export default function EmotionsPage() {
                   id="location"
                   placeholder="예: 회사, 집, 카페 등"
                   value={situation.location}
-                  onChange={(e) => setSituation(prev => ({ ...prev, location: e.target.value }))}
+                  onChange={(e) =>
+                    setSituation((prev) => ({
+                      ...prev,
+                      location: e.target.value,
+                    }))
+                  }
                 />
               </div>
             </div>
@@ -136,9 +165,11 @@ export default function EmotionsPage() {
                   placeholder="사람 이름을 입력하고 추가 버튼을 클릭하세요"
                   value={peopleInput}
                   onChange={(e) => setPeopleInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handlePeopleAdd()}
+                  onKeyPress={(e) => e.key === "Enter" && handlePeopleAdd()}
                 />
-                <Button type="button" onClick={handlePeopleAdd}>추가</Button>
+                <Button type="button" onClick={handlePeopleAdd}>
+                  추가
+                </Button>
               </div>
               {situation.people.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-2">
@@ -161,12 +192,13 @@ export default function EmotionsPage() {
             </div>
 
             <div className="space-y-2">
-              <Label className="flex items-center gap-2">
-                상황 유형 *
-              </Label>
-              <Select value={situation.situation_type} onValueChange={(value) => 
-                setSituation(prev => ({ ...prev, situation_type: value }))
-              }>
+              <Label className="flex items-center gap-2">상황 유형 *</Label>
+              <Select
+                value={situation.situation_type}
+                onValueChange={(value) =>
+                  setSituation((prev) => ({ ...prev, situation_type: value }))
+                }
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="상황 유형을 선택하세요" />
                 </SelectTrigger>
@@ -211,24 +243,35 @@ export default function EmotionsPage() {
 
         {/* 제출 버튼 */}
         <div className="flex gap-4 justify-end">
-          <Button variant="outline" onClick={() => {
-            setSituation({
-              datetime: new Date().toISOString().slice(0, 16),
-              location: '',
-              people: [],
-              situation_type: ''
-            })
-            setConversationContent('')
-            setEmotions([])
-          }}>
+          <Button
+            variant="outline"
+            onClick={() => {
+              setSituation({
+                datetime: new Date().toISOString().slice(0, 16),
+                location: "",
+                people: [],
+                situation_type: "",
+              });
+              setConversationContent("");
+              setEmotions([]);
+            }}
+          >
             초기화
           </Button>
-          <Button 
+          <Button
             onClick={handleSubmit}
-            disabled={isSubmitting || !situation.location || !situation.situation_type || emotions.length === 0 || !conversationContent}
+            disabled={
+              isSubmitting ||
+              !situation.location ||
+              !situation.situation_type ||
+              emotions.length === 0 ||
+              !conversationContent
+            }
             className="min-w-[120px]"
           >
-            {isSubmitting ? '저장 중...' : (
+            {isSubmitting ? (
+              "저장 중..."
+            ) : (
               <>
                 <Brain className="h-4 w-4 mr-2" />
                 AI 분석 요청
@@ -244,11 +287,14 @@ export default function EmotionsPage() {
             <ul className="text-sm text-muted-foreground space-y-1">
               <li>• 구체적인 상황과 대화 내용을 상세히 기록해주세요</li>
               <li>• 여러 감정이 복합적으로 느껴진다면 모두 선택해주세요</li>
-              <li>• 감정의 강도를 정확히 표현해주시면 더 맞춤화된 조언을 받을 수 있습니다</li>
+              <li>
+                • 감정의 강도를 정확히 표현해주시면 더 맞춤화된 조언을 받을 수
+                있습니다
+              </li>
             </ul>
           </CardContent>
         </Card>
       </div>
     </div>
-  )
+  );
 }
