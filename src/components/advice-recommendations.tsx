@@ -39,9 +39,17 @@ export function AdviceRecommendations({
   );
   const [activeAdvice, setActiveAdvice] = useState<string | null>(null);
 
-  const handleAdviceComplete = (adviceId: string) => {
-    setCompletedAdvices((prev) => new Set([...prev, adviceId]));
-    onAdviceComplete?.(adviceId);
+  const handleToggleAdviceCompletion = (adviceId: string) => {
+    setCompletedAdvices((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(adviceId)) {
+        newSet.delete(adviceId);
+      } else {
+        newSet.add(adviceId);
+      }
+      return newSet;
+    });
+    onAdviceComplete?.(adviceId); // Still call this for external tracking if needed
   };
 
   const handleAdviceStart = (adviceId: string) => {
@@ -121,14 +129,7 @@ export function AdviceRecommendations({
                     return (
                       <Card
                         key={advice.id}
-                        className={`transition-all ${
-                          isCompleted
-                            ? "bg-green-50 border-green-200"
-                            : isActive
-                            ? "ring-2 ring-primary"
-                            : ""
-                        }`}
-                      >
+                        className={`transition-all duration-300 ease-in-out ${isCompleted ? "bg-emerald-900/30 border-emerald-500" : isActive ? "ring-2 ring-primary" : ""}`}>
                         <CardHeader className="pb-3">
                           <div className="flex items-start justify-between">
                             <div className="flex items-start gap-3">
@@ -164,7 +165,17 @@ export function AdviceRecommendations({
                               </div>
                             </div>
                             <div className="flex gap-2">
-                              {!isCompleted && (
+                              {isCompleted ? (
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => handleToggleAdviceCompletion(advice.id)}
+                                  className="text-emerald-400"
+                                >
+                                  <CheckCircle className="h-4 w-4 mr-1" />
+                                  완료됨 (취소)
+                                </Button>
+                              ) : (
                                 <Button
                                   variant={isActive ? "default" : "outline"}
                                   size="sm"
@@ -173,12 +184,6 @@ export function AdviceRecommendations({
                                   <Play className="h-4 w-4 mr-1" />
                                   {isActive ? "진행 중" : "시작"}
                                 </Button>
-                              )}
-                              {isCompleted && (
-                                <Badge className="bg-green-100 text-green-800">
-                                  <CheckCircle className="h-3 w-3 mr-1" />
-                                  완료
-                                </Badge>
                               )}
                             </div>
                           </div>
@@ -209,9 +214,10 @@ export function AdviceRecommendations({
                               <div className="flex justify-end pt-3 border-t">
                                 <Button
                                   onClick={() =>
-                                    handleAdviceComplete(advice.id)
+                                    handleToggleAdviceCompletion(advice.id)
                                   }
                                   size="sm"
+                                  variant="default"
                                 >
                                   <CheckCircle className="h-4 w-4 mr-1" />
                                   완료 표시

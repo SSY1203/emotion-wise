@@ -11,13 +11,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function AnalysisPage() {
-  const [recordId, setRecordId] = useState<string | null>(null);
   const router = useRouter();
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    setRecordId(searchParams.get("id"));
-  }, []);
 
   const [emotionRecord, setEmotionRecord] = useState<
     (EmotionRecord & { id: string }) | null
@@ -27,6 +21,9 @@ export default function AnalysisPage() {
   const [analyzing, setAnalyzing] = useState(false);
 
   useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const recordId = searchParams.get("id");
+
     if (!recordId) {
       router.push("/dashboard");
       return;
@@ -72,7 +69,7 @@ export default function AnalysisPage() {
     };
 
     loadEmotionRecord();
-  }, [recordId]);
+  }, [router]);
 
   const generateAnalysis = async (record: EmotionRecord & { id: string }) => {
     setAnalyzing(true);
