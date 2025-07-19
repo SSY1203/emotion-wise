@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardDescription,
@@ -23,7 +24,7 @@ export default function Home() {
       <section className="py-20 px-4 text-center">
         <div className="container mx-auto max-w-4xl">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-            EmotionWise
+            EmotionWise <Badge variant="outline" className="text-primary-foreground/70 border-primary-foreground/50">Beta</Badge>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8">
             당신의 감정을 이해하고, 건강하게 관리하는 AI 기반 감정 코칭 플랫폼

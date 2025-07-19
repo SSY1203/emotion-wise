@@ -22,7 +22,7 @@ export function Navigation() {
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
             <Brain className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">EmotionWise</span>
+            <span className="text-xl font-bold">EmotionWise <sup className="text-xs text-primary-foreground/70">Beta</sup></span>
           </Link>
           
           <div className="flex items-center space-x-6">
