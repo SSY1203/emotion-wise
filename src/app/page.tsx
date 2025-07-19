@@ -30,7 +30,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/emotions">
-              <Button size="lg" className="w-full sm:w-auto">
+              <Button size="lg" className="w-full sm:w-auto shadow-lg shadow-primary/50">
                 <Heart className="mr-2 h-5 w-5" />
                 감정 기록하기
               </Button>
@@ -130,7 +130,7 @@ export default function Home() {
                 방법으로 더 건강한 감정 생활을 시작하세요.
               </p>
               <Link href="/chat">
-                <Button>무료로 시작하기</Button>
+                <Button>시작하기</Button>
               </Link>
             </div>
           </div>
