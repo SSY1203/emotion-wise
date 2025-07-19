@@ -9,9 +9,10 @@ import { useRouter } from "next/navigation"
 interface EmotionHistoryCardProps {
   record: EmotionRecord & { id: string }
   onDelete?: (id: string) => void
+  onClick?: (id: string) => void
 }
 
-export function EmotionHistoryCard({ record, onDelete }: EmotionHistoryCardProps) {
+export function EmotionHistoryCard({ record, onDelete, onClick }: EmotionHistoryCardProps) {
   const router = useRouter()
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -39,7 +40,7 @@ export function EmotionHistoryCard({ record, onDelete }: EmotionHistoryCardProps
   }
 
   return (
-    <Card className="">
+    <Card className="cursor-pointer" onClick={() => onClick && onClick(record.id)}>
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="space-y-1">
@@ -143,7 +144,7 @@ export function EmotionHistoryCard({ record, onDelete }: EmotionHistoryCardProps
               className="text-xs"
             >
               <Brain className="h-3 w-3 mr-1" />
-              AI 분석
+              AI 분석 보기
             </Button>
           </div>
         </div>

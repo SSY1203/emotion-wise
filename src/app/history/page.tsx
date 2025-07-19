@@ -73,6 +73,7 @@ export default function HistoryPage() {
               key={record.id}
               record={record}
               onDelete={handleDeleteRecord}
+              onClick={(id) => router.push(`/analysis?id=${id}`)}
             />
           ))}
         </div>

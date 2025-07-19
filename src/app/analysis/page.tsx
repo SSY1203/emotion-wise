@@ -38,7 +38,9 @@ export default function AnalysisPage() {
         const storedRecords = JSON.parse(
           localStorage.getItem("emotionRecords") || "[]"
         );
-        const record = storedRecords.find((r: EmotionRecord & { id: string }) => r.id === recordId);
+        const record = storedRecords.find(
+          (r: EmotionRecord & { id: string }) => r.id === recordId
+        );
 
         if (!record) {
           router.push("/dashboard");
@@ -70,7 +72,7 @@ export default function AnalysisPage() {
     };
 
     loadEmotionRecord();
-  }, [recordId, router]);
+  }, [recordId]);
 
   const generateAnalysis = async (record: EmotionRecord & { id: string }) => {
     setAnalyzing(true);
