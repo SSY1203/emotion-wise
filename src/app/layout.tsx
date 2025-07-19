@@ -32,6 +32,8 @@ export default function RootLayout({
       >
         <div className="stars stars-animation"></div>
         <Image
+          width={1000}
+          height={1000}
           src="/moon.png"
           alt="Moon"
           className="fixed bottom-[-500px] right-[-500px] w-[1000px] h-[1000px] opacity-50 z-[-1] pointer-events-none"
