@@ -244,7 +244,7 @@ export default function EmotionsPage() {
         {/* 제출 버튼 */}
         <div className="flex gap-4 justify-end">
           <Button
-            variant="outline"
+            variant="ghost"
             onClick={() => {
               setSituation({
                 datetime: new Date().toISOString().slice(0, 16),
@@ -267,7 +267,7 @@ export default function EmotionsPage() {
               emotions.length === 0 ||
               !conversationContent
             }
-            className="min-w-[120px]"
+            className="min-w-[120px] border border-primary-foreground"
           >
             {isSubmitting ? (
               "저장 중..."
