@@ -3,7 +3,8 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Brain, BarChart3, Heart, Home, List, MessageSquare } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 const navigation = [
   { name: '홈', href: '/', icon: Home },
@@ -22,7 +23,7 @@ export function Navigation() {
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
             <Brain className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">EmotionWise <sup className="text-xs text-primary-foreground/70">Beta</sup></span>
+            <span className="text-xl font-bold">EmotionWise <Badge variant="outline" className="text-primary-foreground/70 border-primary-foreground/50">Beta</Badge></span>
           </Link>
           
           <div className="flex items-center space-x-6">
