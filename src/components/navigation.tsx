@@ -10,7 +10,7 @@ const navigation = [
   { name: '감정 기록', href: '/emotions', icon: Heart },
   { name: '기록 목록', href: '/history', icon: List },
   { name: '대시보드', href: '/dashboard', icon: BarChart3 },
-  { name: '심리 상담', href: '/chat', icon: MessageSquare },
+  { name: '대화하기', href: '/chat', icon: MessageSquare },
 ]
 
 export function Navigation() {
