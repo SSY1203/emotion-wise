@@ -66,10 +66,10 @@ export function EmotionSelector({
               <button
                 key={emotion}
                 onClick={() => handleEmotionSelect(emotion)}
-                className={`p-4 rounded-lg border-2 transition-all hover:scale-105 ${
+                className={`p-4 rounded-lg border-2 transition-all ${
                   isSelected
                     ? "border-primary bg-primary/10"
-                    : "border-border hover:border-primary/50"
+                    : "border-border"
                 }`}
                 style={{
                   backgroundColor: isSelected
@@ -106,7 +106,7 @@ export function EmotionSelector({
                     variant="ghost"
                     size="sm"
                     onClick={() => handleEmotionRemove(emotionState.type)}
-                    className="text-muted-foreground hover:text-destructive"
+                    className="text-muted-foreground"
                   >
                     ✕
                   </Button>

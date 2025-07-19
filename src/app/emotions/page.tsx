@@ -181,7 +181,7 @@ export default function EmotionsPage() {
                       {person}
                       <button
                         onClick={() => handlePeopleRemove(person)}
-                        className="hover:text-destructive"
+                        className=""
                       >
                         ✕
                       </button>
@@ -202,7 +202,7 @@ export default function EmotionsPage() {
                 <SelectTrigger>
                   <SelectValue placeholder="상황 유형을 선택하세요" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-black/75">
                   {situationTypes.map((type) => (
                     <SelectItem key={type} value={type}>
                       {type}

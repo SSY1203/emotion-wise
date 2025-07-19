@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/navigation";
+import { Footer } from "@/components/footer";
 import Image from "next/image";
 
 const geistSans = Geist({
@@ -28,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
         <div className="stars stars-animation"></div>
         <Image
@@ -39,7 +40,8 @@ export default function RootLayout({
           className="fixed bottom-[-500px] right-[-500px] w-[1000px] h-[1000px] opacity-50 z-[-1] pointer-events-none"
         />
         <Navigation />
-        <main className="fade-in relative z-10">{children}</main>
+        <main className="fade-in relative z-10 flex-grow">{children}</main>
+        <Footer />
       </body>
     </html>
   );

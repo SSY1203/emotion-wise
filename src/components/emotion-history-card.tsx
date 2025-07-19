@@ -39,7 +39,7 @@ export function EmotionHistoryCard({ record, onDelete }: EmotionHistoryCardProps
   }
 
   return (
-    <Card className="hover:shadow-md transition-shadow">
+    <Card className="">
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="space-y-1">
@@ -62,7 +62,7 @@ export function EmotionHistoryCard({ record, onDelete }: EmotionHistoryCardProps
               variant="ghost"
               size="sm"
               onClick={() => onDelete(record.id)}
-              className="text-muted-foreground hover:text-destructive"
+              className="text-muted-foreground"
             >
               <Trash2 className="h-4 w-4" />
             </Button>

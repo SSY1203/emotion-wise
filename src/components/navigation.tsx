@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Brain, BarChart3, Heart, Home, List } from "lucide-react"
+import { Brain, BarChart3, Heart, Home, List, MessageSquare } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navigation = [
@@ -10,6 +10,7 @@ const navigation = [
   { name: '감정 기록', href: '/emotions', icon: Heart },
   { name: '기록 목록', href: '/history', icon: List },
   { name: '대시보드', href: '/dashboard', icon: BarChart3 },
+  { name: '심리 상담', href: '/chat', icon: MessageSquare },
 ]
 
 export function Navigation() {
@@ -32,7 +33,7 @@ export function Navigation() {
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    "flex items-center space-x-1 text-sm font-medium transition-colors hover:text-primary",
+                    "flex items-center space-x-1 text-sm font-medium",
                     pathname === item.href
                       ? "text-primary"
                       : "text-muted-foreground"

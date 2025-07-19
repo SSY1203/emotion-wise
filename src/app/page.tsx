@@ -12,6 +12,7 @@ import {
   Heart,
   Target,
   Users,
+  MessageSquare
 } from "lucide-react";
 import Link from "next/link";
 
@@ -34,10 +35,10 @@ export default function Home() {
                 감정 기록하기
               </Button>
             </Link>
-            <Link href="/dashboard">
+            <Link href="/chat">
               <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                <BarChart3 className="mr-2 h-5 w-5" />
-                대시보드 보기
+                <MessageSquare className="mr-2 h-5 w-5" />
+                심리 상담 시작하기
               </Button>
             </Link>
           </div>
@@ -128,7 +129,7 @@ export default function Home() {
                 복잡한 감정을 명확히 파악하고, AI가 제안하는 맞춤형 관리
                 방법으로 더 건강한 감정 생활을 시작하세요.
               </p>
-              <Link href="/emotions">
+              <Link href="/chat">
                 <Button>무료로 시작하기</Button>
               </Link>
             </div>
