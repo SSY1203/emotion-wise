@@ -31,12 +31,11 @@ export default function RootLayout({
     <html lang="ko" suppressHydrationWarning>
       <head>
         <Script
-          strategy="afterInteractive"
+          async
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS_ID}`}
         />
         <Script
           id="google-analytics"
-          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
