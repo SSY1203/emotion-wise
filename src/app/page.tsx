@@ -200,13 +200,13 @@ export default function Home() {
             <Button
               variant="secondary"
               onClick={() => handleCloseBetaPopup(true)}
-              className="w-full sm:w-auto"
+              className="w-full sm:w-auto text-gray-800"
             >
               오늘 하루 그만 보기
             </Button>
             <Button
               onClick={() => handleCloseBetaPopup(false)}
-              className="w-full sm:w-auto"
+              className="w-full sm:w-auto text-gray-800"
             >
               닫기
             </Button>
